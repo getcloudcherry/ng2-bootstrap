@@ -1,23 +1,11 @@
 language: node_js
 node_js:
-  - "6"
+  - "5"
+  - "4"
 
-before_install: npm i -g npm@latest
+before_install:
+- npm install -g npm@3.6
+- npm install -g tsd@0.6.5
 
 script:
-  - npm run flow.install:typings
-  - npm test
-
-after_success:
-  - ./node_modules/.bin/codecov  -f coverage/coverage-final.json
-
-addons:
-  # sauce labs tunel connector (read more https://docs.travis-ci.com/user/sauce-connect/ )
-  sauce_connect: true
-  firefox: "42.0"
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    # required by node-gyp to build some packages
-    packages:
-    - g++-4.8
+- npm test

@@ -1,8 +1,6 @@
 ### Usage
 ```typescript
-import { DATEPICKER_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
-// or
-import { DATEPICKER_DIRECTIVES } from 'ng2-bootstrap/components/datepicker';
+import {DATEPICKER_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 ```
 
 ### Annotations
@@ -20,8 +18,7 @@ import { DATEPICKER_DIRECTIVES } from 'ng2-bootstrap/components/datepicker';
     'formatDay', 'formatMonth', 'formatYear',
     'formatDayHeader', 'formatDayTitle', 'formatMonthTitle',
     'yearRange',
-    'shortcutPropagation',
-    'onlyCurrentMonth'
+    'shortcutPropagation'
   ]
 })
 
@@ -35,7 +32,7 @@ export const DATEPICKER_DIRECTIVES:Array<any> = [DatePicker];
   - `minDate` (`?Date=null`) - oldest selectable date
   - `maxDate` (`?Date=null`) - latest selectable date
   - `dateDisabled` (`?Array<{date:Date, mode:string}>`) - array of disabled dates if `mode` is `day`, or years, etc.
-  - `customClass` (`?Array<{date:Date, mode:string, clazz:string}>`) - array of custom css classes to be applied to targeted dates
+  - `customClass` (`?Array<{date:Date, mode:string, class: strung}>`) - array of custom classes to be applied to targeted dates
   - `showWeeks` (`?boolean=true`) - if `false` week numbers will be hidden
   - `startingDay` (`?number=0`) - starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday).
   - `initDate` (`?Date`) - default date to show if `ng-model` value is not specified
@@ -49,7 +46,6 @@ export const DATEPICKER_DIRECTIVES:Array<any> = [DatePicker];
   - `formatMonthTitle` (`?string='yyyy'`) - format of title when selecting month
   - `yearRange` (`?number=20`) - number of years displayed in year selection
   - `shortcutPropagation` (`?boolean=false`) - if `true` shortcut`s event propagation will be disabled
-  - `onlyCurrentMonth` (`?boolean=false`) - if `true` only dates from the currently displayed month will be shown
 
 <!--
 ### Date picker popup properties

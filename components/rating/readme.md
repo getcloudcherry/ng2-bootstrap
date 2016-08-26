@@ -1,8 +1,6 @@
 ### Usage
 ```typescript
-import { RatingComponent } from 'ng2-bootstrap/ng2-bootstrap';
-// or
-import { RatingComponent } from 'ng2-bootstrap/components/rating';
+import { Rating } from 'ng2-bootstrap/ng2-bootstrap';
 ```
 
 ### Annotations
@@ -12,16 +10,16 @@ import { RatingComponent } from 'ng2-bootstrap/components/rating';
   selector: 'rating[ngModel]',
   directives: [NgFor]
 })
-export class RatingComponent implements ControlValueAccessor, OnInit {
+export class Rating implements ControlValueAccessor, OnInit {
   @Input() private max:number;
   @Input() private stateOn:string;
   @Input() private stateOff:string;
   @Input() private readonly:boolean;
   @Input() private titles:Array<string>;
-  @Input() private ratingStates:{stateOn:string, stateOff:string}[];
+  @Input() private ratingStates:Array<{stateOn:string, stateOff:string}>;
 
-  @Output() private onHover:EventEmitter<number> = new EventEmitter(false);
-  @Output() private onLeave:EventEmitter<number> = new EventEmitter(false);
+  @Output() private onHover:EventEmitter<number> = new EventEmitter();
+  @Output() private onLeave:EventEmitter<number> = new EventEmitter();
 }
 ```
 
@@ -31,7 +29,7 @@ export class RatingComponent implements ControlValueAccessor, OnInit {
   - `titles` (`?Array<string>`) - array of icons titles, default: (`["one", "two", "three", "four", "five"]`)
   - `stateOn` (`?string='glyphicon-star'`) - selected icon class
   - `stateOff` (`?string='glyphicon-star-empty'`) - unselected icon class
-  - `ratingStates` (`?{stateOn:string, stateOff:string}[]`) - array of custom icons classes
+  - `ratingStates` (`?Array<{stateOn:string, stateOff:string}>`) - array of custom icons classes
 
 ### Rating events
   - `onHover` - fired when icon selected, `$event:number` equals to selected rating

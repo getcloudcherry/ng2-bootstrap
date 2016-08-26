@@ -1,14 +1,12 @@
-import {
-  Component, OnInit, OnDestroy, Input, HostBinding, Inject
-} from '@angular/core';
-import {NgClass} from '@angular/common';
-import {CollapseDirective} from '../collapse';
-import {AccordionComponent} from './accordion.component';
+import {Component, OnInit, OnDestroy, Input, HostBinding, Inject} from 'angular2/core';
+import {NgClass} from 'angular2/common';
 
-/* tslint:disable:component-selector-name */
+import {Collapse} from '../collapse';
+import {Accordion} from './accordion.component';
+
 @Component({
   selector: 'accordion-group, accordion-panel',
-  directives: [CollapseDirective, NgClass],
+  directives: [Collapse, NgClass],
   template: `
     <div class="panel" [ngClass]="panelClass">
       <div class="panel-heading" (click)="toggleOpen($event)">
@@ -27,15 +25,13 @@ import {AccordionComponent} from './accordion.component';
     </div>
   `
 })
-export class AccordionPanelComponent implements OnInit, OnDestroy {
+export class AccordionPanel implements OnInit, OnDestroy {
   @Input() public heading:string;
   @Input() public panelClass:string;
   @Input() public isDisabled:boolean;
 
-  // Questionable, maybe .panel-open should be on child div.panel element?
   @HostBinding('class.panel-open')
-  @Input()
-  public get isOpen():boolean {
+  @Input() public get isOpen():boolean {
     return this._isOpen;
   }
 
@@ -47,22 +43,20 @@ export class AccordionPanelComponent implements OnInit, OnDestroy {
   }
 
   private _isOpen:boolean;
-  private accordion:AccordionComponent;
 
-  public constructor(@Inject(AccordionComponent) accordion:AccordionComponent) {
-    this.accordion = accordion;
+  constructor(@Inject(Accordion) private accordion:Accordion) {
   }
 
-  public ngOnInit():any {
+  ngOnInit() {
     this.panelClass = this.panelClass || 'panel-default';
     this.accordion.addGroup(this);
   }
 
-  public ngOnDestroy():any {
+  ngOnDestroy() {
     this.accordion.removeGroup(this);
   }
 
-  public toggleOpen(event:MouseEvent):any {
+  public toggleOpen(event:MouseEvent) {
     event.preventDefault();
     if (!this.isDisabled) {
       this.isOpen = !this.isOpen;

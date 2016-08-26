@@ -1,5 +1,6 @@
-import {Component, OnInit, OnDestroy, Input, HostBinding} from '@angular/core';
-import {CarouselComponent, Direction} from './carousel.component';
+import {Component, OnInit, OnDestroy, Input, HostBinding } from 'angular2/core';
+
+import {Carousel, Direction} from  './carousel.component';
 
 @Component({
   selector: 'slide',
@@ -9,7 +10,7 @@ import {CarouselComponent, Direction} from './carousel.component';
     </div>
   `
 })
-export class SlideComponent implements OnInit, OnDestroy {
+export class Slide implements OnInit, OnDestroy {
   @Input() public index:number;
   @Input() public direction:Direction;
 
@@ -18,19 +19,16 @@ export class SlideComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.item')
   @HostBinding('class.carousel-item')
-  public addClass:boolean = true;
+  private addClass:boolean = true;
 
-  private carousel:CarouselComponent;
-
-  public constructor(carousel:CarouselComponent) {
-    this.carousel = carousel;
+  constructor(private carousel:Carousel) {
   }
 
-  public ngOnInit():void {
+  public ngOnInit() {
     this.carousel.addSlide(this);
   }
 
-  public ngOnDestroy():void {
+  public ngOnDestroy() {
     this.carousel.removeSlide(this);
   }
 }

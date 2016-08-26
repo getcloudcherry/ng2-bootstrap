@@ -1,11 +1,12 @@
-import {Component, OnInit, OnDestroy, Input, Host} from '@angular/core';
-import {NgClass, NgStyle} from '@angular/common';
-import {ProgressDirective} from './progress.directive';
+import {Component, OnInit, OnDestroy, Input, Host} from 'angular2/core';
+import {NgClass, NgStyle} from 'angular2/common';
+
+import {Progress} from './progress.directive';
 
 // todo: number pipe
 // todo: use query from progress?
 @Component({
-  selector: 'bar',
+  selector: 'bar, [bar]',
   directives: [NgClass, NgStyle],
   template: `
   <div class="progress-bar"
@@ -16,14 +17,14 @@ import {ProgressDirective} from './progress.directive';
     aria-valuemin="0"
     [attr.aria-valuenow]="value"
     [attr.aria-valuetext]="percent.toFixed(0) + '%'"
-    [attr.aria-valuemax]="max"><ng-content></ng-content></div>
+    [attr.aria-valuemax]="max"
+    ><ng-content></ng-content></div>
 `
 })
-export class BarComponent implements OnInit, OnDestroy {
+export class Bar implements OnInit, OnDestroy {
   @Input() public type:string;
 
-  @Input()
-  public get value():number {
+  @Input() public get value():number {
     return this._value;
   }
 
@@ -37,25 +38,24 @@ export class BarComponent implements OnInit, OnDestroy {
 
   public percent:number = 0;
   public transition:string;
-  public progress:ProgressDirective;
 
   private _value:number;
-  public constructor(@Host() progress:ProgressDirective) {
-    this.progress = progress;
+
+  constructor(@Host() public progress:Progress) {
   }
 
-  public ngOnInit():void {
+  ngOnInit() {
     this.progress.addBar(this);
   }
 
-  public ngOnDestroy():void {
+  ngOnDestroy() {
     this.progress.removeBar(this);
   }
 
-  public recalculatePercentage():void {
+  public recalculatePercentage() {
     this.percent = +(100 * this.value / this.progress.max).toFixed(2);
 
-    let totalPercentage = this.progress.bars.reduce(function (total:number, bar:BarComponent):number {
+    let totalPercentage = this.progress.bars.reduce(function (total, bar) {
       return total + bar.percent;
     }, 0);
 

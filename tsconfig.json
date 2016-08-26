@@ -1,21 +1,22 @@
 {
+  "version": "1.7.5",
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "removeComments": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true,
-    "noEmitHelpers": true,
     "noImplicitAny": true,
-    "declaration": false
+    "listFiles": false,
+    "noLib": false
   },
   "exclude": [
     "node_modules"
   ],
   "files": [
-    "./typings/index.d.ts",
-    "./demo/custom-typings.d.ts",
+    "./tsd.d.ts",
     "./ng2-bootstrap.ts"
   ]
 }

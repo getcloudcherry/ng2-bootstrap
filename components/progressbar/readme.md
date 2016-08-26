@@ -1,15 +1,13 @@
 ### Usage
 ```typescript
 import { PROGRESSBAR_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
-// or
-import { PROGRESSBAR_DIRECTIVES } from 'ng2-bootstrap/components/progressbar';
 ```
 
 ### Annotations
 ```typescript
 // class Progress implements OnInit
 @Directive({ selector: 'bs-progress, [progress]' })
-export class ProgressDirective implements OnInit {
+export class Progress implements OnInit {
   @Input() public animate:boolean;
 
   @HostBinding('attr.max')
@@ -23,7 +21,7 @@ export class ProgressDirective implements OnInit {
   selector: 'bar, [bar]',
   directives: [NgClass, NgStyle]
 })
-export class BarComponent implements OnInit, OnDestroy {
+export class Bar implements OnInit, OnDestroy {
   @Input() public type:string;
   @Input() public get value():number
 }
@@ -33,7 +31,7 @@ export class BarComponent implements OnInit, OnDestroy {
   selector: 'progressbar, [progressbar]',
   directives: [Progress, Bar]
 })
-export class ProgressbarComponent {
+export class Progressbar {
   @Input() private animate:boolean;
   @Input() private max:number;
   @Input() private type:string;

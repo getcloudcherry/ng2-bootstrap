@@ -1,18 +1,14 @@
 ### Usage
 ```typescript
-import { BUTTON_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
+import {BUTTON_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 // or
-import { BUTTON_DIRECTIVES } from 'ng2-bootstrap/components/buttons';
-
-import { ButtonRadioDirective, ButtonCheckboxDirective } from 'ng2-bootstrap/ng2-bootstrap';
-// or
-import { ButtonRadioDirective, ButtonCheckboxDirective } from 'ng2-bootstrap/components/buttons';
+import { ButtonRadio, ButtonCheckbox } from 'ng2-bootstrap/ng2-bootstrap';
 ```
 ### Annotations
 ```typescript
-// directive ButtonRadio
+// component ButtonRadio
 @Directive({ selector: '[btnRadio][ngModel]' })
-export class ButtonRadioDirective implements ControlValueAccessor, OnInit {
+export class ButtonRadio implements ControlValueAccessor, OnInit {
   @Input() public btnRadio:string;
   @Input() public uncheckable:boolean;
 
@@ -22,9 +18,9 @@ export class ButtonRadioDirective implements ControlValueAccessor, OnInit {
   @HostListener('click')
   private onClick() {}
 }
-// directive ButtonCheckbox
+// component ButtonCheckbox
 @Directive({ selector: '[btnCheckbox][ngModel]' })
-export class ButtonCheckboxDirective implements ControlValueAccessor, OnInit {
+export class ButtonCheckbox implements ControlValueAccessor, OnInit {
   @Input() private btnCheckboxTrue:any;
   @Input() private btnCheckboxFalse:any;
 
@@ -40,7 +36,7 @@ export const BUTTON_DIRECTIVES = [ButtonCheckbox, ButtonRadio];
 
 ### Radio button properties
   - `btnRadio` (`string`) - radio button value, will be set to `ngModel`
-  - `uncheckable` (`?boolean=false`) - if `true` radio button can be unchecked
+  - `uncheckable` (`?boolean=false`) - if `true` radio button can be unchecked and `null` will be set to `ngModel`
 
 ### Checkbox button properties
   - `btnCheckboxTrue` (`?any=true`) - truthy value, will be set to `ngModel`

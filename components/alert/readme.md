@@ -1,8 +1,6 @@
 ### Usage
 ```typescript
-import { AlertComponent } from 'ng2-bootstrap/ng2-bootstrap';
-// or
-import { AlertComponent } from 'ng2-bootstrap/components/alert';
+import { Alert } from 'ng2-bootstrap/ng2-bootstrap';
 ```
 
 ### Annotations
@@ -13,12 +11,12 @@ import { AlertComponent } from 'ng2-bootstrap/components/alert';
   directives: [NgIf, NgClass],
   template: ALERT_TEMPLATE
 })
-export class AlertComponent implements OnInit {
+export class Alert implements OnInit {
   @Input() public type:string = 'warning';
   @Input() public dismissible:boolean;
   @Input() public dismissOnTimeout:number;
 
-  @Output() public close:EventEmitter<Alert> = new EventEmitter(false);
+  @Output() public close:EventEmitter<Alert> = new EventEmitter();
 }
 ```
 

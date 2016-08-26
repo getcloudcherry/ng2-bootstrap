@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from 'angular2/core';
 
 @Injectable()
 export class TooltipOptions {
@@ -6,11 +6,8 @@ export class TooltipOptions {
   public popupClass:string;
   public animation:boolean;
   public isOpen:boolean;
-  public content:string;
-  public htmlContent:any;
-  public context:any;
 
-  public constructor(options:Object) {
+  constructor(options:Object) {
     Object.assign(this, options);
   }
 }

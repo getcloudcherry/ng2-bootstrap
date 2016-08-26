@@ -1,5 +1,5 @@
-import {Directive, OnInit, Input, HostBinding} from '@angular/core';
-import {BarComponent} from './bar.component';
+import {Directive, OnInit, Input, HostBinding} from 'angular2/core';
+import {Bar} from './bar.component';
 
 const progressConfig = {
   animate: true,
@@ -8,23 +8,20 @@ const progressConfig = {
 
 // todo: progress element conflict with bootstrap.css
 // todo: need hack: replace host element with div
-/* tslint:disable */
-@Directive({selector: 'bs-progress, [progress]'})
-/* tslint:enable */
-export class ProgressDirective implements OnInit {
+@Directive({ selector: 'bs-progress, [progress]' })
+export class Progress implements OnInit {
   @Input() public animate:boolean;
 
   @HostBinding('attr.max')
-  @Input()
-  public get max():number {
+  @Input() public get max():number {
     return this._max;
   }
 
-  @HostBinding('class.progress') public addClass:boolean = true;
+  @HostBinding('class') private addClass = 'progress';
 
   public set max(v:number) {
     this._max = v;
-    this.bars.forEach((bar:BarComponent) => {
+    this.bars.forEach((bar:Bar) => {
       bar.recalculatePercentage();
     });
   }
@@ -33,19 +30,23 @@ export class ProgressDirective implements OnInit {
 
   private _max:number;
 
-  public ngOnInit():void {
+  constructor() {
+  }
+
+  ngOnInit() {
     this.animate = this.animate !== false;
     this.max = typeof this.max === 'number' ? this.max : progressConfig.max;
   }
 
-  public addBar(bar:BarComponent):void {
+
+  public addBar(bar:Bar) {
     if (!this.animate) {
       bar.transition = 'none';
     }
     this.bars.push(bar);
   }
 
-  public removeBar(bar:BarComponent):void {
+  public removeBar(bar:Bar) {
     this.bars.splice(this.bars.indexOf(bar), 1);
   }
 }

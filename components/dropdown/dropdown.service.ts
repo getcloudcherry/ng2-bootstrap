@@ -1,40 +1,40 @@
 export const ALWAYS = 'always';
 export const DISABLED = 'disabled';
 export const OUTSIDECLICK = 'outsideClick';
-export const NONINPUT = 'nonInput';
 
-import {DropdownDirective} from './dropdown.directive';
+import {Dropdown} from './dropdown.directive';
 
 export class DropdownService {
-  private openScope:DropdownDirective;
+  private openScope:Dropdown;
+  private dropdownScope:Dropdown;
 
   private closeDropdownBind:EventListener = this.closeDropdown.bind(this);
   private keybindFilterBind:EventListener = this.keybindFilter.bind(this);
 
-  public open(dropdownScope:DropdownDirective):void {
+  public open(dropdownScope:Dropdown) {
     if (!this.openScope) {
-      window.document.addEventListener('click', this.closeDropdownBind, true);
+      window.document.addEventListener('click', this.closeDropdownBind);
       window.document.addEventListener('keydown', this.keybindFilterBind);
     }
 
-    if (this.openScope && this.openScope !== dropdownScope) {
+    if (this.openScope && this.openScope !== this.dropdownScope) {
       this.openScope.isOpen = false;
     }
 
     this.openScope = dropdownScope;
   }
 
-  public close(dropdownScope:DropdownDirective):void {
+  public close(dropdownScope:Dropdown) {
     if (this.openScope !== dropdownScope) {
       return;
     }
 
-    this.openScope = void 0;
-    window.document.removeEventListener('click', this.closeDropdownBind, true);
+    this.openScope = null;
+    window.document.removeEventListener('click', this.closeDropdownBind);
     window.document.removeEventListener('keydown', this.keybindFilterBind);
   }
 
-  private closeDropdown(event:MouseEvent):void {
+  private closeDropdown(event:MouseEvent) {
     if (!this.openScope) {
       return;
     }
@@ -48,26 +48,19 @@ export class DropdownService {
       return;
     }
 
-    if (event && this.openScope.autoClose === NONINPUT &&
-      this.openScope.menuEl &&
-      /input|textarea/i.test((event.target as any).tagName) &&
-      this.openScope.menuEl.nativeElement.contains(event.target)) {
-      return;
-    }
-
     if (event && this.openScope.autoClose === OUTSIDECLICK &&
       this.openScope.menuEl &&
-      this.openScope.menuEl.nativeElement.contains(event.target)) {
+      this.openScope.menuEl.nativeElement === event.target) {
       return;
     }
 
     this.openScope.isOpen = false;
   }
 
-  private keybindFilter(event:KeyboardEvent):void {
+  private keybindFilter(event:KeyboardEvent) {
     if (event.which === 27) {
       this.openScope.focusToggleElement();
-      this.closeDropdown(void 0);
+      this.closeDropdown(null);
       return;
     }
 

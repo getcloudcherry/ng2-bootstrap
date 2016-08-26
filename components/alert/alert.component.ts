@@ -1,5 +1,5 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {NgIf, NgClass} from '@angular/common';
+import { Component, OnInit, Input, Output, EventEmitter } from 'angular2/core';
+import { NgIf, NgClass } from 'angular2/common';
 
 const ALERT_TEMPLATE = `
   <div class="alert" role="alert" [ngClass]="classes" *ngIf="!closed">
@@ -17,17 +17,19 @@ const ALERT_TEMPLATE = `
   directives: [NgIf, NgClass],
   template: ALERT_TEMPLATE
 })
-export class AlertComponent implements OnInit {
+export class Alert implements OnInit {
   @Input() public type:string = 'warning';
   @Input() public dismissible:boolean;
   @Input() public dismissOnTimeout:number;
 
-  @Output() public close:EventEmitter<AlertComponent> = new EventEmitter<AlertComponent>(false);
+  @Output() public close:EventEmitter<Alert> = new EventEmitter();
 
   private closed:boolean;
   private classes:Array<string> = [];
 
-  public ngOnInit():any {
+  constructor() {}
+
+  ngOnInit() {
     this.classes[0] = `alert-${this.type}`;
     if (this.dismissible) {
       this.classes[1] = 'alert-dismissible';
@@ -41,7 +43,7 @@ export class AlertComponent implements OnInit {
   }
 
   // todo: mouse event + touch + pointer
-  public onClose():void {
+  onClose() {
     this.closed = true;
     this.close.emit(this);
   }

@@ -1,8 +1,6 @@
 ### Usage
 ```typescript
 import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
-// or
-import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/components/pagination';
 ```
 
 ### Annotations
@@ -13,7 +11,7 @@ import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/components/pagination';
   template: PAGINATION_TEMPLATE,
   directives: [NgClass, NgFor]
 })
-export class PaginationComponent implements ControlValueAccessor, OnInit, IPaginationConfig, IAttribute {
+export class Pagination implements ControlValueAccessor, OnInit, IPaginationConfig, IAttribute {
   @Input() public maxSize:number;
 
   @Input() public boundaryLinks:boolean;
@@ -29,8 +27,8 @@ export class PaginationComponent implements ControlValueAccessor, OnInit, IPagin
   @Input() public get itemsPerPage():number {}
   @Input() private get totalItems():number {}
 
-  @Output() private numPages:EventEmitter<number> = new EventEmitter(false);
-  @Output() private pageChanged:EventEmitter<IPageChangedEvent> = new EventEmitter(false);
+  @Output() private numPages:EventEmitter<number> = new EventEmitter();
+  @Output() private pageChanged:EventEmitter<IPageChangedEvent> = new EventEmitter();
 
 @Component({
   selector: 'pager[ngModel]',
@@ -43,9 +41,9 @@ export class PaginationComponent implements ControlValueAccessor, OnInit, IPagin
   template: PAGER_TEMPLATE,
   directives: [NgClass]
 })
-export class PagerComponent extends Pagination {}
+export class Pager extends Pagination {}
 
-export const PAGINATION_DIRECTIVES:Array<any> = [PaginationComponent, PagerComponent];
+export const PAGINATION_DIRECTIVES:Array<any> = [Pagination, Pager];
 ```
 ### Pagination properties
   - `rotate` (`?boolean=true`) - if `true` current page will in the middle of pages list

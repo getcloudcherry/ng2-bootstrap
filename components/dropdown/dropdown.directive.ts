@@ -1,17 +1,16 @@
 import {
-  Directive, OnInit, OnDestroy, Input, Output, HostBinding, EventEmitter,
-  ElementRef, ChangeDetectorRef
-} from '@angular/core';
-import {dropdownService, NONINPUT} from './dropdown.service';
+  Directive,
+  OnInit, OnDestroy, Input, Output, HostBinding,
+  EventEmitter, ElementRef, ContentChildren,
+  Query, QueryList
+} from 'angular2/core';
 
-@Directive({
-  selector: '[dropdown]',
-  exportAs: 'bs-dropdown'
-})
-export class DropdownDirective implements OnInit, OnDestroy {
+import {dropdownService, ALWAYS} from './dropdown.service';
+
+@Directive({selector: '[dropdown]'})
+export class Dropdown implements OnInit, OnDestroy {
   @HostBinding('class.open')
-  @Input()
-  public get isOpen():boolean {
+  @Input() public get isOpen():boolean {
     return this._isOpen;
   }
 
@@ -20,60 +19,50 @@ export class DropdownDirective implements OnInit, OnDestroy {
   // enum string: ['always', 'outsideClick', 'disabled']
   @Input() public appendToBody:boolean;
 
-  @Output() public onToggle:EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @Output() public isOpenChange:EventEmitter<boolean> = new EventEmitter<boolean>(false);
-  @HostBinding('class.dropdown') public addClass:boolean = true;
+  @Output() public onToggle:EventEmitter<boolean> = new EventEmitter();
+  @HostBinding('class.dropdown') private addClass = true;
 
+  private _isOpen:boolean;
   // index of selected element
   public selectedOption:number;
   // drop menu html
   public menuEl:ElementRef;
   // drop down toggle element
   public toggleEl:ElementRef;
-  public el:ElementRef;
-  private _isOpen:boolean;
 
-  private _changeDetector: ChangeDetectorRef;
-
-  public constructor(el:ElementRef, ref:ChangeDetectorRef) {
-    // @Query('dropdownMenu', {descendants: false})
-    // dropdownMenuList:QueryList<ElementRef>) {
-    this.el = el;
-    this._changeDetector = ref;
+  constructor(public el:ElementRef,
+              @Query('dropdownMenu', {descendants: false}) dropdownMenuList:QueryList<ElementRef>) {
     // todo: bind to route change event
   }
 
-  public set isOpen(value:boolean) {
+  public set isOpen(value) {
     this._isOpen = !!value;
 
     // todo: implement after porting position
-    // if (this.appendToBody && this.menuEl) {
-    //
-    // }
+    if (this.appendToBody && this.menuEl) {
 
-    // todo: $animate open<->close transitions, as soon as ng2Animate will be
-    // ready
+    }
+
+    // todo: $animate open<->close transitions, as soon as ng2Animate will be ready
     if (this.isOpen) {
       this.focusToggleElement();
       dropdownService.open(this);
     } else {
       dropdownService.close(this);
-      this.selectedOption = void 0;
+      this.selectedOption = null;
     }
     this.onToggle.emit(this.isOpen);
-    this.isOpenChange.emit(this.isOpen);
-    this._changeDetector.markForCheck();
     // todo: implement call to setIsOpen if set and function
   }
 
-  public ngOnInit():void {
-    this.autoClose = this.autoClose || NONINPUT;
+  ngOnInit() {
+    this.autoClose = this.autoClose || ALWAYS;
     if (this.isOpen) {
       // todo: watch for event get-isOpen?
     }
   }
 
-  public ngOnDestroy():void {
+  ngOnDestroy() {
     if (this.appendToBody && this.menuEl) {
       this.menuEl.nativeElement.remove();
     }
@@ -97,7 +86,7 @@ export class DropdownDirective implements OnInit, OnDestroy {
     return this.isOpen = arguments.length ? !!open : !this.isOpen;
   }
 
-  public focusDropdownEntry(keyCode:number):void {
+  public focusDropdownEntry(keyCode:number) {
     // If append to body is used.
     let hostEl = this.menuEl ?
       this.menuEl.nativeElement :
@@ -141,14 +130,12 @@ export class DropdownDirective implements OnInit, OnDestroy {
 
         this.selectedOption--;
         break;
-      default:
-        break;
     }
 
     elems[this.selectedOption].focus();
   }
 
-  public focusToggleElement():void {
+  public focusToggleElement() {
     if (this.toggleEl) {
       this.toggleEl.nativeElement.focus();
     }

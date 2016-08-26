@@ -1,8 +1,8 @@
-import {ProgressDirective} from './progressbar/progress.directive';
-import {BarComponent} from './progressbar/bar.component';
-import {ProgressbarComponent} from './progressbar/progressbar.component';
+import {Progress} from './progressbar/progress.directive';
+import {Bar} from './progressbar/bar.component';
+import {Progressbar} from './progressbar/progressbar.component';
 
-export {ProgressDirective} from './progressbar/progress.directive';
-export {BarComponent} from './progressbar/bar.component';
-export {ProgressbarComponent} from './progressbar/progressbar.component';
-export const PROGRESSBAR_DIRECTIVES:Array<any> = [ProgressDirective, BarComponent, ProgressbarComponent];
+export {Progress} from './progressbar/progress.directive';
+export {Bar} from './progressbar/bar.component';
+export {Progressbar} from './progressbar/progressbar.component';
+export const PROGRESSBAR_DIRECTIVES:Array<any> = [Progress, Bar, Progressbar];

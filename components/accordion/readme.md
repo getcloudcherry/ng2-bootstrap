@@ -12,7 +12,7 @@ import { ACCORDION_DIRECTIVES } from 'ng2-bootstrap/components/accordion';
   selector: 'accordion',
   template: `<ng-content></ng-content>`
 })
-export class AccordionComponent {
+export class Accordion {
   @Input() public closeOthers:boolean;
 
   @HostBinding('class.panel-group')
@@ -24,7 +24,7 @@ export class AccordionComponent {
   selector: 'accordion-group',
   directives: [Collapse, NgClass]
 })
-export class AccordionGroupComponent implements OnInit, OnDestroy {
+export class AccordionGroup implements OnInit, OnDestroy {
   @Input() public heading:string;
   @Input() public panelClass:string;
   @Input() public isDisabled:boolean;
